@@ -1,0 +1,6 @@
+framework module MFSJSONEntity {
+  umbrella header "MFSJSONEntity.h"
+
+  export *
+  module * { export * }
+}
