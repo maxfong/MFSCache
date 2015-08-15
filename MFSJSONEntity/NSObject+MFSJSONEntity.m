@@ -94,7 +94,8 @@
                     value = [propertyValue p_mfs_propertyDictionary];
                 }
                 else if ([propertyValue isKindOfClass:[NSNumber class]] ||
-                         [propertyValue isKindOfClass:[NSString class]]) {
+                         [propertyValue isKindOfClass:[NSString class]] ||
+                         [propertyValue isKindOfClass:[NSNull class]]) {
                     value = propertyValue;
                 }
                 else {
@@ -142,7 +143,8 @@
     else if ([obj isKindOfClass:[NSDictionary class]]) {
         propertyValue = [obj p_mfs_propertyDictionary];
     }
-    else if ([obj isKindOfClass:[NSString class]]) {
+    else if ([obj isKindOfClass:[NSString class]] ||
+             [obj isKindOfClass:[NSNumber class]]) {
         propertyValue = obj;
     }
     else {
@@ -163,8 +165,8 @@
             objc_property_t property = properties[i];
             const char *propertyAttributes = property_getAttributes(property);
             BOOL isReadWrite = YES;
-            isReadWrite = !(BOOL)strstr(propertyAttributes, ",R");
-            isReadWrite = (BOOL)strstr(propertyAttributes, ",V");
+            isReadWrite = (strstr(propertyAttributes, ",R") == NULL);
+            isReadWrite = (strstr(propertyAttributes, ",V") != NULL);
             if (isReadWrite) {
                 NSString *propertyName = [[NSString alloc] initWithCString:property_getName(property) encoding:NSUTF8StringEncoding];
                 if (propertyName) [mArray addObject:propertyName];
