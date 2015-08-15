@@ -165,8 +165,8 @@
             objc_property_t property = properties[i];
             const char *propertyAttributes = property_getAttributes(property);
             BOOL isReadWrite = YES;
-            isReadWrite = !(BOOL)strstr(propertyAttributes, ",R");
-            isReadWrite = (BOOL)strstr(propertyAttributes, ",V");
+            isReadWrite = (strstr(propertyAttributes, ",R") == NULL);
+            isReadWrite = (strstr(propertyAttributes, ",V") != NULL);
             if (isReadWrite) {
                 NSString *propertyName = [[NSString alloc] initWithCString:property_getName(property) encoding:NSUTF8StringEncoding];
                 if (propertyName) [mArray addObject:propertyName];
