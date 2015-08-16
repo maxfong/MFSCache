@@ -11,6 +11,7 @@
 @interface SubTestObject : NSObject
 
 @property (nonatomic, strong) NSString *name;
+@property (nonatomic, assign) NSUInteger identifier;
 
 @end
 

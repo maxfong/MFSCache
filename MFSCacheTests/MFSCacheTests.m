@@ -45,19 +45,25 @@
 }
 
 - (void)testCacheArray {
-    SubTestObject *subObject = SubTestObject.new;
-    subObject.name = @"subObject-Name";
     
     NSMutableArray *array = [NSMutableArray array];
-    for (int i = 0; i<10; i++) {
+    for (int i = 0; i<2; i++) {
+        SubTestObject *subObject = SubTestObject.new;
+        subObject.name = @"subObject-Name";
+        subObject.identifier = i;
         [array addObject:subObject];
     }
     
     [[MFSCacheManager defaultManager] setObject:array forKey:@"mfsCacheArray"];
-    NSLog(@"Array存储前：%@", array);
     
-    NSString *cache = [[MFSCacheManager defaultManager] objectForKey:@"mfsCacheArray"];
-    NSLog(@"Array存储后：%@", cache);
+    [array enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSLog(@"Array存储前：第%lu个对象：%@, identifier is:%lu", (unsigned long)idx+1, obj, (unsigned long)((SubTestObject *)obj).identifier);
+    }];
+    
+    NSArray *cache = [[MFSCacheManager defaultManager] objectForKey:@"mfsCacheArray"];
+    [cache enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+        NSLog(@"Array存储后：第%lu个对象：%@, identifier is:%lu", (unsigned long)idx+1, obj, (unsigned long)((SubTestObject *)obj).identifier);
+    }];
 }
 
 - (void)testCacheDictionary {
@@ -65,7 +71,7 @@
     [[MFSCacheManager defaultManager] setObject:dictionary forKey:@"mfsCacheDictionary"];
     NSLog(@"Dictionary存储前：%@", dictionary);
     
-    NSString *cache = [[MFSCacheManager defaultManager] objectForKey:@"mfsCacheDictionary"];
+    NSDictionary *cache = [[MFSCacheManager defaultManager] objectForKey:@"mfsCacheDictionary"];
     NSLog(@"Dictionary存储后：%@", cache);
 }
 
