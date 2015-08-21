@@ -26,8 +26,13 @@
         if (propertyValue) {
             if ([propertyValue isKindOfClass:[NSDictionary class]]) {
                 id propertyObject = nil;
-                if (propertyType) {
-                    Class cls = NSClassFromString(propertyType);
+                NSString *propertyClassName = propertyType;
+                if ([self respondsToSelector:@selector(replacedElementDictionary)]) {
+                    NSDictionary *replacedDictionary = [self performSelector:@selector(replacedElementDictionary)];
+                    propertyClassName = replacedDictionary[propertyName];
+                }
+                if (propertyClassName) {
+                    Class cls = NSClassFromString(propertyClassName);
                     if ([cls isSubclassOfClass:[NSDictionary class]]) { propertyObject = propertyValue; }
                     else { propertyObject = cls ? [cls mfs_objectWithDictionary:propertyValue] : propertyValue; }
                 }
@@ -164,9 +169,7 @@
         for ( int i = 0 ; i < propertyCount ; i++ ) {
             objc_property_t property = properties[i];
             const char *propertyAttributes = property_getAttributes(property);
-            BOOL isReadWrite = YES;
-            isReadWrite = (strstr(propertyAttributes, ",R") == NULL);
-            isReadWrite = (strstr(propertyAttributes, ",V") != NULL);
+            BOOL isReadWrite = (strstr(propertyAttributes, ",V") != NULL);
             if (isReadWrite) {
                 NSString *propertyName = [[NSString alloc] initWithCString:property_getName(property) encoding:NSUTF8StringEncoding];
                 if (propertyName) [mArray addObject:propertyName];
