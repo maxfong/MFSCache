@@ -26,11 +26,12 @@
         if (propertyValue) {
             if ([propertyValue isKindOfClass:[NSDictionary class]]) {
                 id propertyObject = nil;
-                NSString *propertyClassName = propertyType;
+                NSString *propertyClassName = nil;
                 if ([self respondsToSelector:@selector(replacedElementDictionary)]) {
                     NSDictionary *replacedDictionary = [self performSelector:@selector(replacedElementDictionary)];
                     propertyClassName = replacedDictionary[propertyName];
                 }
+                propertyClassName = propertyClassName ?: propertyType;
                 if (propertyClassName) {
                     Class cls = NSClassFromString(propertyClassName);
                     if ([cls isSubclassOfClass:[NSDictionary class]]) { propertyObject = propertyValue; }
