@@ -44,6 +44,20 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A931251F1B9B1909005FBAAE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A93125191B9B1909005FBAAE /* MFSJSONEntity.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A91663CA1B6E0250004E142A;
+			remoteInfo = MFSJSONEntity;
+		};
+		A93125211B9B1909005FBAAE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A93125191B9B1909005FBAAE /* MFSJSONEntity.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = A91664021B6E0512004E142A;
+			remoteInfo = "MFSJSONEntity Tests";
+		};
 		A9EE4ECC1B7E2C9400CF4F3A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A9EE4EB61B7E2C9400CF4F3A /* Project object */;
@@ -56,6 +70,10 @@
 /* Begin PBXFileReference section */
 		A93125151B9B155E005FBAAE /* NSString+MFSEncrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MFSEncrypt.h"; sourceTree = "<group>"; };
 		A93125161B9B155E005FBAAE /* NSString+MFSEncrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MFSEncrypt.m"; sourceTree = "<group>"; };
+		A93125191B9B1909005FBAAE /* MFSJSONEntity.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MFSJSONEntity.xcodeproj; path = MFSJSONEntity/MFSJSONEntity.xcodeproj; sourceTree = SOURCE_ROOT; };
+		A93125251B9B1936005FBAAE /* MFSJSONEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MFSJSONEntity.h; path = MFSJSONEntity/MFSJSONEntity/MFSJSONEntity.h; sourceTree = SOURCE_ROOT; };
+		A93125261B9B1936005FBAAE /* NSObject+JSONEntity.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "NSObject+JSONEntity.h"; path = "MFSJSONEntity/MFSJSONEntity/NSObject+JSONEntity.h"; sourceTree = SOURCE_ROOT; };
+		A93125271B9B1936005FBAAE /* MFSJSONEntityElementProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MFSJSONEntityElementProtocol.h; path = MFSJSONEntity/MFSJSONEntity/MFSJSONEntityElementProtocol.h; sourceTree = SOURCE_ROOT; };
 		A9EE4EBF1B7E2C9400CF4F3A /* MFSCache.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MFSCache.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9EE4EC31B7E2C9400CF4F3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9EE4EC41B7E2C9400CF4F3A /* MFSCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFSCache.h; sourceTree = "<group>"; };
@@ -99,6 +117,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A931251A1B9B1909005FBAAE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A93125201B9B1909005FBAAE /* MFSJSONEntity.framework */,
+				A93125221B9B1909005FBAAE /* MFSJSONEntity Tests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A93125231B9B190F005FBAAE /* MFSJSONEntity */ = {
+			isa = PBXGroup;
+			children = (
+				A93125241B9B191B005FBAAE /* Header */,
+				A93125191B9B1909005FBAAE /* MFSJSONEntity.xcodeproj */,
+			);
+			name = MFSJSONEntity;
+			sourceTree = "<group>";
+		};
+		A93125241B9B191B005FBAAE /* Header */ = {
+			isa = PBXGroup;
+			children = (
+				A93125251B9B1936005FBAAE /* MFSJSONEntity.h */,
+				A93125261B9B1936005FBAAE /* NSObject+JSONEntity.h */,
+				A93125271B9B1936005FBAAE /* MFSJSONEntityElementProtocol.h */,
+			);
+			name = Header;
+			sourceTree = "<group>";
+		};
 		A9EE4EB51B7E2C9400CF4F3A = {
 			isa = PBXGroup;
 			children = (
@@ -159,6 +205,7 @@
 		A9EE4F021B7E2DD400CF4F3A /* AuxCategory */ = {
 			isa = PBXGroup;
 			children = (
+				A93125231B9B190F005FBAAE /* MFSJSONEntity */,
 				A9EE4F031B7E2DD400CF4F3A /* MFSEncrypt */,
 				A9EE4F111B7E2DD400CF4F3A /* NSJSONSerialization+MFSJSONString.h */,
 				A9EE4F121B7E2DD400CF4F3A /* NSJSONSerialization+MFSJSONString.m */,
@@ -313,6 +360,12 @@
 			mainGroup = A9EE4EB51B7E2C9400CF4F3A;
 			productRefGroup = A9EE4EC01B7E2C9400CF4F3A /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = A931251A1B9B1909005FBAAE /* Products */;
+					ProjectRef = A93125191B9B1909005FBAAE /* MFSJSONEntity.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				A9EE4EBE1B7E2C9400CF4F3A /* MFSCache */,
@@ -321,6 +374,23 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		A93125201B9B1909005FBAAE /* MFSJSONEntity.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = MFSJSONEntity.framework;
+			remoteRef = A931251F1B9B1909005FBAAE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A93125221B9B1909005FBAAE /* MFSJSONEntity Tests.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "MFSJSONEntity Tests.xctest";
+			remoteRef = A93125211B9B1909005FBAAE /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		A9EE4EBD1B7E2C9400CF4F3A /* Resources */ = {
