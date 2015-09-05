@@ -18,5 +18,4 @@
 #import "MFSGlobalManager.h"
 
 /** 开放的一些Encrypt类别 */
-#import "NSData+MFSEncrypt.h"
 #import "NSString+MFSEncrypt.h"

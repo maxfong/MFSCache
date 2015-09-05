@@ -8,14 +8,9 @@
 
 #import "NSData-AES.h"
 #import "mfs_rijndael.h"
-#import "mfs_GTMBase64.h"
 #import <CommonCrypto/CommonCryptor.h>
 
 @implementation NSData(AES)
-
-- (NSString *)mfs_base64EncodedString {
-    return [mfs_GTMBase64 stringByEncodingData:self];
-}
 
 - (NSData *)mfs_AESEncryptWithPassphrase:(NSString *)pass keybits:(AESKeyBits)kbs
 {

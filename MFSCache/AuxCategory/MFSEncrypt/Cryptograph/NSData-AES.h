@@ -18,7 +18,6 @@ typedef enum {
 
 @interface NSData(AES)
 
-- (NSString *)mfs_base64EncodedString;
 - (NSData *)mfs_AESEncryptWithPassphrase:(NSString *)pass keybits:(AESKeyBits)kbs;
 - (NSData *)mfs_AESDecryptWithPassphrase:(NSString *)pass keybits:(AESKeyBits)kbs;
 

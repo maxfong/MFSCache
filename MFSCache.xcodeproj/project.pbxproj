@@ -21,26 +21,15 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		A931123F1B805EA700A0C64F /* MFSJSONEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = A93112381B805EA700A0C64F /* MFSJSONEntity.h */; };
-		A93112401B805EA700A0C64F /* MFSJSONEntityElementProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = A93112391B805EA700A0C64F /* MFSJSONEntityElementProtocol.h */; };
-		A93112411B805EA700A0C64F /* NSObject+JSONEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = A931123A1B805EA700A0C64F /* NSObject+JSONEntity.h */; };
-		A93112421B805EA700A0C64F /* NSObject+JSONEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A931123B1B805EA700A0C64F /* NSObject+JSONEntity.m */; };
-		A93112431B805EA700A0C64F /* NSObject+MFSJSONEntity.h in Headers */ = {isa = PBXBuildFile; fileRef = A931123C1B805EA700A0C64F /* NSObject+MFSJSONEntity.h */; };
-		A93112441B805EA700A0C64F /* NSObject+MFSJSONEntity.m in Sources */ = {isa = PBXBuildFile; fileRef = A931123D1B805EA700A0C64F /* NSObject+MFSJSONEntity.m */; };
+		A93125171B9B155E005FBAAE /* NSString+MFSEncrypt.h in Headers */ = {isa = PBXBuildFile; fileRef = A93125151B9B155E005FBAAE /* NSString+MFSEncrypt.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A93125181B9B155E005FBAAE /* NSString+MFSEncrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = A93125161B9B155E005FBAAE /* NSString+MFSEncrypt.m */; };
 		A9EE4EC51B7E2C9400CF4F3A /* MFSCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A9EE4EC41B7E2C9400CF4F3A /* MFSCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9EE4ECB1B7E2C9400CF4F3A /* MFSCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EE4EBF1B7E2C9400CF4F3A /* MFSCache.framework */; };
 		A9EE4ED21B7E2C9400CF4F3A /* MFSCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4ED11B7E2C9400CF4F3A /* MFSCacheTests.m */; };
-		A9EE4F131B7E2DD400CF4F3A /* GTMDefines.h in Headers */ = {isa = PBXBuildFile; fileRef = A9EE4F061B7E2DD400CF4F3A /* GTMDefines.h */; };
-		A9EE4F141B7E2DD400CF4F3A /* mfs_GTMBase64.h in Headers */ = {isa = PBXBuildFile; fileRef = A9EE4F071B7E2DD400CF4F3A /* mfs_GTMBase64.h */; };
-		A9EE4F151B7E2DD400CF4F3A /* mfs_GTMBase64.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4F081B7E2DD400CF4F3A /* mfs_GTMBase64.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		A9EE4F161B7E2DD400CF4F3A /* NSData-AES.h in Headers */ = {isa = PBXBuildFile; fileRef = A9EE4F091B7E2DD400CF4F3A /* NSData-AES.h */; };
 		A9EE4F171B7E2DD400CF4F3A /* NSData-AES.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4F0A1B7E2DD400CF4F3A /* NSData-AES.m */; };
 		A9EE4F181B7E2DD400CF4F3A /* mfs_rijndael.c in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4F0B1B7E2DD400CF4F3A /* mfs_rijndael.c */; };
 		A9EE4F191B7E2DD400CF4F3A /* mfs_rijndael.h in Headers */ = {isa = PBXBuildFile; fileRef = A9EE4F0C1B7E2DD400CF4F3A /* mfs_rijndael.h */; };
-		A9EE4F1A1B7E2DD400CF4F3A /* NSData+MFSEncrypt.h in Headers */ = {isa = PBXBuildFile; fileRef = A9EE4F0D1B7E2DD400CF4F3A /* NSData+MFSEncrypt.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A9EE4F1B1B7E2DD400CF4F3A /* NSData+MFSEncrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4F0E1B7E2DD400CF4F3A /* NSData+MFSEncrypt.m */; };
-		A9EE4F1C1B7E2DD400CF4F3A /* NSString+MFSEncrypt.h in Headers */ = {isa = PBXBuildFile; fileRef = A9EE4F0F1B7E2DD400CF4F3A /* NSString+MFSEncrypt.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A9EE4F1D1B7E2DD400CF4F3A /* NSString+MFSEncrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4F101B7E2DD400CF4F3A /* NSString+MFSEncrypt.m */; };
 		A9EE4F1E1B7E2DD400CF4F3A /* NSJSONSerialization+MFSJSONString.h in Headers */ = {isa = PBXBuildFile; fileRef = A9EE4F111B7E2DD400CF4F3A /* NSJSONSerialization+MFSJSONString.h */; };
 		A9EE4F1F1B7E2DD400CF4F3A /* NSJSONSerialization+MFSJSONString.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4F121B7E2DD400CF4F3A /* NSJSONSerialization+MFSJSONString.m */; };
 		A9EE4F281B7E305E00CF4F3A /* MFSCacheManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A9EE4F211B7E305E00CF4F3A /* MFSCacheManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -65,29 +54,18 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A93112381B805EA700A0C64F /* MFSJSONEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFSJSONEntity.h; sourceTree = "<group>"; };
-		A93112391B805EA700A0C64F /* MFSJSONEntityElementProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFSJSONEntityElementProtocol.h; sourceTree = "<group>"; };
-		A931123A1B805EA700A0C64F /* NSObject+JSONEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+JSONEntity.h"; sourceTree = "<group>"; };
-		A931123B1B805EA700A0C64F /* NSObject+JSONEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+JSONEntity.m"; sourceTree = "<group>"; };
-		A931123C1B805EA700A0C64F /* NSObject+MFSJSONEntity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+MFSJSONEntity.h"; sourceTree = "<group>"; };
-		A931123D1B805EA700A0C64F /* NSObject+MFSJSONEntity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+MFSJSONEntity.m"; sourceTree = "<group>"; };
+		A93125151B9B155E005FBAAE /* NSString+MFSEncrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MFSEncrypt.h"; sourceTree = "<group>"; };
+		A93125161B9B155E005FBAAE /* NSString+MFSEncrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MFSEncrypt.m"; sourceTree = "<group>"; };
 		A9EE4EBF1B7E2C9400CF4F3A /* MFSCache.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MFSCache.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9EE4EC31B7E2C9400CF4F3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9EE4EC41B7E2C9400CF4F3A /* MFSCache.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MFSCache.h; sourceTree = "<group>"; };
 		A9EE4ECA1B7E2C9400CF4F3A /* MFSCacheTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MFSCacheTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9EE4ED01B7E2C9400CF4F3A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9EE4ED11B7E2C9400CF4F3A /* MFSCacheTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MFSCacheTests.m; sourceTree = "<group>"; };
-		A9EE4F061B7E2DD400CF4F3A /* GTMDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GTMDefines.h; sourceTree = "<group>"; };
-		A9EE4F071B7E2DD400CF4F3A /* mfs_GTMBase64.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mfs_GTMBase64.h; sourceTree = "<group>"; };
-		A9EE4F081B7E2DD400CF4F3A /* mfs_GTMBase64.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = mfs_GTMBase64.m; sourceTree = "<group>"; };
 		A9EE4F091B7E2DD400CF4F3A /* NSData-AES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData-AES.h"; sourceTree = "<group>"; };
 		A9EE4F0A1B7E2DD400CF4F3A /* NSData-AES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData-AES.m"; sourceTree = "<group>"; };
 		A9EE4F0B1B7E2DD400CF4F3A /* mfs_rijndael.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mfs_rijndael.c; sourceTree = "<group>"; };
 		A9EE4F0C1B7E2DD400CF4F3A /* mfs_rijndael.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mfs_rijndael.h; sourceTree = "<group>"; };
-		A9EE4F0D1B7E2DD400CF4F3A /* NSData+MFSEncrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+MFSEncrypt.h"; sourceTree = "<group>"; };
-		A9EE4F0E1B7E2DD400CF4F3A /* NSData+MFSEncrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+MFSEncrypt.m"; sourceTree = "<group>"; };
-		A9EE4F0F1B7E2DD400CF4F3A /* NSString+MFSEncrypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+MFSEncrypt.h"; sourceTree = "<group>"; };
-		A9EE4F101B7E2DD400CF4F3A /* NSString+MFSEncrypt.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+MFSEncrypt.m"; sourceTree = "<group>"; };
 		A9EE4F111B7E2DD400CF4F3A /* NSJSONSerialization+MFSJSONString.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSJSONSerialization+MFSJSONString.h"; sourceTree = "<group>"; };
 		A9EE4F121B7E2DD400CF4F3A /* NSJSONSerialization+MFSJSONString.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSJSONSerialization+MFSJSONString.m"; sourceTree = "<group>"; };
 		A9EE4F211B7E305E00CF4F3A /* MFSCacheManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MFSCacheManager.h; sourceTree = "<group>"; };
@@ -121,20 +99,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A93112361B805EA700A0C64F /* MFSJSONEntity */ = {
-			isa = PBXGroup;
-			children = (
-				A93112381B805EA700A0C64F /* MFSJSONEntity.h */,
-				A93112391B805EA700A0C64F /* MFSJSONEntityElementProtocol.h */,
-				A931123A1B805EA700A0C64F /* NSObject+JSONEntity.h */,
-				A931123B1B805EA700A0C64F /* NSObject+JSONEntity.m */,
-				A931123C1B805EA700A0C64F /* NSObject+MFSJSONEntity.h */,
-				A931123D1B805EA700A0C64F /* NSObject+MFSJSONEntity.m */,
-			);
-			name = MFSJSONEntity;
-			path = MFSJSONEntity/MFSJSONEntity;
-			sourceTree = "<group>";
-		};
 		A9EE4EB51B7E2C9400CF4F3A = {
 			isa = PBXGroup;
 			children = (
@@ -195,7 +159,6 @@
 		A9EE4F021B7E2DD400CF4F3A /* AuxCategory */ = {
 			isa = PBXGroup;
 			children = (
-				A93112361B805EA700A0C64F /* MFSJSONEntity */,
 				A9EE4F031B7E2DD400CF4F3A /* MFSEncrypt */,
 				A9EE4F111B7E2DD400CF4F3A /* NSJSONSerialization+MFSJSONString.h */,
 				A9EE4F121B7E2DD400CF4F3A /* NSJSONSerialization+MFSJSONString.m */,
@@ -207,10 +170,8 @@
 			isa = PBXGroup;
 			children = (
 				A9EE4F041B7E2DD400CF4F3A /* Cryptograph */,
-				A9EE4F0D1B7E2DD400CF4F3A /* NSData+MFSEncrypt.h */,
-				A9EE4F0E1B7E2DD400CF4F3A /* NSData+MFSEncrypt.m */,
-				A9EE4F0F1B7E2DD400CF4F3A /* NSString+MFSEncrypt.h */,
-				A9EE4F101B7E2DD400CF4F3A /* NSString+MFSEncrypt.m */,
+				A93125151B9B155E005FBAAE /* NSString+MFSEncrypt.h */,
+				A93125161B9B155E005FBAAE /* NSString+MFSEncrypt.m */,
 			);
 			path = MFSEncrypt;
 			sourceTree = "<group>";
@@ -218,23 +179,12 @@
 		A9EE4F041B7E2DD400CF4F3A /* Cryptograph */ = {
 			isa = PBXGroup;
 			children = (
-				A9EE4F051B7E2DD400CF4F3A /* Base64 */,
 				A9EE4F091B7E2DD400CF4F3A /* NSData-AES.h */,
 				A9EE4F0A1B7E2DD400CF4F3A /* NSData-AES.m */,
 				A9EE4F0B1B7E2DD400CF4F3A /* mfs_rijndael.c */,
 				A9EE4F0C1B7E2DD400CF4F3A /* mfs_rijndael.h */,
 			);
 			path = Cryptograph;
-			sourceTree = "<group>";
-		};
-		A9EE4F051B7E2DD400CF4F3A /* Base64 */ = {
-			isa = PBXGroup;
-			children = (
-				A9EE4F061B7E2DD400CF4F3A /* GTMDefines.h */,
-				A9EE4F071B7E2DD400CF4F3A /* mfs_GTMBase64.h */,
-				A9EE4F081B7E2DD400CF4F3A /* mfs_GTMBase64.m */,
-			);
-			path = Base64;
 			sourceTree = "<group>";
 		};
 		A9EE4F201B7E305E00CF4F3A /* MFSCacheManager */ = {
@@ -282,22 +232,15 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A931123F1B805EA700A0C64F /* MFSJSONEntity.h in Headers */,
-				A9EE4F141B7E2DD400CF4F3A /* mfs_GTMBase64.h in Headers */,
-				A9EE4F1A1B7E2DD400CF4F3A /* NSData+MFSEncrypt.h in Headers */,
-				A9EE4F1C1B7E2DD400CF4F3A /* NSString+MFSEncrypt.h in Headers */,
-				A93112411B805EA700A0C64F /* NSObject+JSONEntity.h in Headers */,
 				A9EE4F3E1B7E371200CF4F3A /* MFSGlobalManager.h in Headers */,
 				A9EE4F281B7E305E00CF4F3A /* MFSCacheManager.h in Headers */,
 				A9EE4F191B7E2DD400CF4F3A /* mfs_rijndael.h in Headers */,
 				A9EE4F1E1B7E2DD400CF4F3A /* NSJSONSerialization+MFSJSONString.h in Headers */,
-				A9EE4F131B7E2DD400CF4F3A /* GTMDefines.h in Headers */,
 				A9EE4F2A1B7E305E00CF4F3A /* MFSFileStorage.h in Headers */,
 				A9EE4EC51B7E2C9400CF4F3A /* MFSCache.h in Headers */,
 				A9EE4F2C1B7E305E00CF4F3A /* MFSFileStorageObject.h in Headers */,
+				A93125171B9B155E005FBAAE /* NSString+MFSEncrypt.h in Headers */,
 				A9EE4F161B7E2DD400CF4F3A /* NSData-AES.h in Headers */,
-				A93112431B805EA700A0C64F /* NSObject+MFSJSONEntity.h in Headers */,
-				A93112401B805EA700A0C64F /* MFSJSONEntityElementProtocol.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -420,15 +363,11 @@
 				A9EE4F1F1B7E2DD400CF4F3A /* NSJSONSerialization+MFSJSONString.m in Sources */,
 				A9EE4F171B7E2DD400CF4F3A /* NSData-AES.m in Sources */,
 				A9EE4F291B7E305E00CF4F3A /* MFSCacheManager.m in Sources */,
-				A9EE4F151B7E2DD400CF4F3A /* mfs_GTMBase64.m in Sources */,
 				A9EE4F2D1B7E305E00CF4F3A /* MFSFileStorageObject.m in Sources */,
-				A9EE4F1D1B7E2DD400CF4F3A /* NSString+MFSEncrypt.m in Sources */,
-				A9EE4F1B1B7E2DD400CF4F3A /* NSData+MFSEncrypt.m in Sources */,
+				A93125181B9B155E005FBAAE /* NSString+MFSEncrypt.m in Sources */,
 				A9EE4F2B1B7E305E00CF4F3A /* MFSFileStorage.m in Sources */,
 				A9EE4F181B7E2DD400CF4F3A /* mfs_rijndael.c in Sources */,
-				A93112421B805EA700A0C64F /* NSObject+JSONEntity.m in Sources */,
 				A9EE4F3F1B7E371200CF4F3A /* MFSGlobalManager.m in Sources */,
-				A93112441B805EA700A0C64F /* NSObject+MFSJSONEntity.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -9,12 +9,11 @@
 #import "NSString+MFSEncrypt.h"
 #import "CommonCrypto/CommonDigest.h"
 #import "NSData-AES.h"
-#import "mfs_GTMBase64.h"
 
 /** 可自行修改 */
 static NSString *MFSDefaultAESKey = @"MFSCache.maxfong";
 static const unsigned char AES_IV[] =
-{ 0x6D, 0x4A, 0x11, 0x3B, 0x53, 0x85, 0x1E, 0x9A, 0x33, 0x53, 0x07, 0x74, 0x2B, 0x8F, 0x98, 0x58 };
+{ 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x40, 0x41, 0x42, 0x43, 0x44, 0x45 };
 
 @implementation NSString (MFSEncrypt)
 
@@ -27,14 +26,6 @@ static const unsigned char AES_IV[] =
         [hash appendFormat:@"%02X", result[i]];
     }
     return [hash lowercaseString];
-}
-
-- (NSString *)base64 {
-    NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
-    return [mfs_GTMBase64 stringByEncodingData:data];
-}
-- (NSData *)base64Decode {
-    return [mfs_GTMBase64 decodeString:self];
 }
 
 - (NSString *)aesEncryptAndBase64Encode {
@@ -52,7 +43,7 @@ static const unsigned char AES_IV[] =
     NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
     NSData *iv = [NSData dataWithBytes:AES_IV length:sizeof(AES_IV)];
     NSData *encrypt = [data mfs_AES128EncryptWithKey:key initVector:iv];
-    if (encrypt) secret = [mfs_GTMBase64 stringByEncodingData:encrypt];
+    if (encrypt) secret = [encrypt base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
     return [secret stringByReplacingOccurrencesOfString:@"\\" withString:@""];//斜杠曾引起过问题
 }
 
@@ -60,7 +51,7 @@ static const unsigned char AES_IV[] =
     if (!string.length || !key.length) return nil;
     
     NSString *secret = nil;
-    NSData *data = [mfs_GTMBase64 decodeString:string];
+    NSData *data = [[NSData alloc] initWithBase64EncodedString:string options:NSDataBase64DecodingIgnoreUnknownCharacters];
     NSData *iv = [NSData dataWithBytes:AES_IV length:sizeof(AES_IV)];
     NSData *decrypt = [data mfs_AES128DecryptWithKey:key initVector:iv];
     if (decrypt) secret = [[NSString alloc] initWithData:decrypt encoding:NSUTF8StringEncoding];
