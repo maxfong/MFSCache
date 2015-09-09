@@ -18,7 +18,7 @@ typedef NS_ENUM(NSUInteger, MFSFileStorageObjectTimeOutInterval) {
 
 /** 数据String */
 @property (nonatomic, copy, readonly) NSString *storageString;
-/** 数据类名 */
+/** 数据对象 */
 @property (nonatomic, strong, readonly) id storageObject;
 /** 数据的存储时效性 */
 @property (nonatomic, assign, readonly) MFSFileStorageObjectTimeOutInterval storageInterval;
