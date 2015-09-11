@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) NSMutableDictionary *storageCaches;
 @property (nonatomic, strong) NSCache *storageArchivers;
+@property (nonatomic, strong) NSArray *finderNames;
 
 @end
 
@@ -79,7 +80,8 @@
 - (void)removeObjectForKey:(NSString *)aKey {
     [self.storageCaches removeObjectForKey:aKey];
     [self.storageArchivers removeObjectForKey:aKey];
-    [MFSFileStorage.finderNames enumerateObjectsUsingBlock:^(NSString *finderName, NSUInteger idx, BOOL *stop) {
+    NSArray *array = [self.finderNames copy];
+    [array enumerateObjectsUsingBlock:^(NSString *finderName, NSUInteger idx, BOOL *stop) {
         NSString *filePath = [self filePathWithFileName:aKey finderName:finderName];
         if (filePath) [[NSFileManager defaultManager] removeItemAtPath:filePath error:nil];
     }];
@@ -94,7 +96,7 @@
 //删除所有的永久文件
 - (void)removePermanentObjects {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *permanentPath = [self cachePathWithFinderName:MFSFileStorage.finderNames[MFSFileStorageObjectIntervalAllTime]];
+        NSString *permanentPath = [self cachePathWithFinderName:self.finderNames[MFSFileStorageObjectIntervalAllTime]];
         [MFSFileStorage enumerateFilesWithPath:permanentPath usingBlock:^(NSString *fileName) {
             NSString *filePath = [permanentPath stringByAppendingString:fileName];
             BOOL isDir;
@@ -107,7 +109,7 @@
 //删除所有的默认文件，常用方法
 - (void)removeDefaultObjectsWithCompletionBlock:(void (^)(long long folderSize))completionBlock {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *path = [self cachePathWithFinderName:MFSFileStorage.finderNames[MFSFileStorageObjectIntervalDefault]];
+        NSString *path = [self cachePathWithFinderName:self.finderNames[MFSFileStorageObjectIntervalDefault]];
         __block long long folderSize = 0;
         [MFSFileStorage enumerateFilesWithPath:path usingBlock:^(NSString *fileName) {
             NSString *filePath = [path stringByAppendingPathComponent:fileName];
@@ -124,7 +126,7 @@
 //删除过期的文件
 - (void)removeExpireObjects {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *path = [self cachePathWithFinderName:MFSFileStorage.finderNames[MFSFileStorageObjectIntervalTiming]];
+        NSString *path = [self cachePathWithFinderName:self.finderNames[MFSFileStorageObjectIntervalTiming]];
         [MFSFileStorage enumerateFilesWithPath:path usingBlock:^(NSString *fileName) {
             NSString *filePath = [path stringByAppendingPathComponent:fileName];
             BOOL isDir;
@@ -137,7 +139,8 @@
 
 + (void)removeDefaultObjectsWithCompletionBlock:(void (^)(long long folderSize))completionBlock {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *path = [[MFSFileStorage defaultStorage] cachePathWithFinderName:MFSFileStorage.finderNames[MFSFileStorageObjectIntervalDefault]];
+        MFSFileStorage *storage = [MFSFileStorage defaultStorage];
+        NSString *path = [storage cachePathWithFinderName:storage.finderNames[MFSFileStorageObjectIntervalDefault]];
         __block long long folderSize = 0;
         [MFSFileStorage enumerateFilesWithPath:path usingBlock:^(NSString *fileName) {
             NSString *filePath = [path stringByAppendingPathComponent:fileName];
@@ -151,7 +154,8 @@
 
 + (void)removeExpireObjects {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *path = [[MFSFileStorage defaultStorage] cachePathWithFinderName:MFSFileStorage.finderNames[MFSFileStorageObjectIntervalTiming]];
+        MFSFileStorage *storage = [MFSFileStorage defaultStorage];
+        NSString *path = [storage cachePathWithFinderName:storage.finderNames[MFSFileStorageObjectIntervalTiming]];
         [self removeExpireObjectsWithPath:path];
     });
 }
@@ -205,18 +209,20 @@
 }
 
 #pragma mark - 文件名操作
-+ (NSArray *)finderNames {
-    static NSArray *array;
-    array = @[[@"storage0" md5], [@"storage1" md5], [@"storage2" md5]];
-    return array;
+- (NSArray *)finderNames {
+    if (!_finderNames) {
+        _finderNames = @[[@"storage0" md5], [@"storage1" md5], [@"storage2" md5]];
+    }
+    return _finderNames;
 }
 - (NSString *)filePathWithObject:(MFSFileStorageObject *)object {
-    NSString *finderName = MFSFileStorage.finderNames[object.storageInterval];
+    NSString *finderName = self.finderNames[object.storageInterval];
     return [self filePathWithFileName:object.objectIdentifier finderName:finderName];
 }
 - (NSString *)filePathWithKey:(NSString *)aKey {
     __block NSString *objectPath = nil;
-    [MFSFileStorage.finderNames enumerateObjectsUsingBlock:^(NSString *finderName, NSUInteger idx, BOOL *stop) {
+    NSArray *array = [self.finderNames copy];
+    [array enumerateObjectsUsingBlock:^(NSString *finderName, NSUInteger idx, BOOL *stop) {
         NSString *filePath = [self filePathWithFileName:aKey finderName:finderName];
         BOOL exist = [[NSFileManager defaultManager] fileExistsAtPath:filePath];
         if (exist) {
