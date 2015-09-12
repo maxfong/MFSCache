@@ -40,10 +40,10 @@ static const unsigned char AES_IV[] =
     if (!string.length || !key.length) return nil;
     
     NSString *secret = nil;
-    NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *data = [string dataUsingEncoding:NSASCIIStringEncoding];
     NSData *iv = [NSData dataWithBytes:AES_IV length:sizeof(AES_IV)];
     NSData *encrypt = [data mfs_AES128EncryptWithKey:key initVector:iv];
-    if (encrypt) secret = [encrypt base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];
+    if (encrypt) secret = [encrypt base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
     return [secret stringByReplacingOccurrencesOfString:@"\\" withString:@""];//斜杠曾引起过问题
 }
 
@@ -54,7 +54,7 @@ static const unsigned char AES_IV[] =
     NSData *data = [[NSData alloc] initWithBase64EncodedString:string options:NSDataBase64DecodingIgnoreUnknownCharacters];
     NSData *iv = [NSData dataWithBytes:AES_IV length:sizeof(AES_IV)];
     NSData *decrypt = [data mfs_AES128DecryptWithKey:key initVector:iv];
-    if (decrypt) secret = [[NSString alloc] initWithData:decrypt encoding:NSUTF8StringEncoding];
+    if (decrypt) secret = [[NSString alloc] initWithData:decrypt encoding:NSASCIIStringEncoding];
     return secret;
 }
 

@@ -23,6 +23,7 @@
 /* Begin PBXBuildFile section */
 		A93125171B9B155E005FBAAE /* NSString+MFSEncrypt.h in Headers */ = {isa = PBXBuildFile; fileRef = A93125151B9B155E005FBAAE /* NSString+MFSEncrypt.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A93125181B9B155E005FBAAE /* NSString+MFSEncrypt.m in Sources */ = {isa = PBXBuildFile; fileRef = A93125161B9B155E005FBAAE /* NSString+MFSEncrypt.m */; };
+		A9DF74B61BA46F0000E8B273 /* MFSJSONEntity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A93125201B9B1909005FBAAE /* MFSJSONEntity.framework */; };
 		A9EE4EC51B7E2C9400CF4F3A /* MFSCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A9EE4EC41B7E2C9400CF4F3A /* MFSCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9EE4ECB1B7E2C9400CF4F3A /* MFSCache.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9EE4EBF1B7E2C9400CF4F3A /* MFSCache.framework */; };
 		A9EE4ED21B7E2C9400CF4F3A /* MFSCacheTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EE4ED11B7E2C9400CF4F3A /* MFSCacheTests.m */; };
@@ -57,6 +58,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = A91664021B6E0512004E142A;
 			remoteInfo = "MFSJSONEntity Tests";
+		};
+		A9DF74B41BA46EFA00E8B273 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A93125191B9B1909005FBAAE /* MFSJSONEntity.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = A91663C91B6E0250004E142A;
+			remoteInfo = MFSJSONEntity;
 		};
 		A9EE4ECC1B7E2C9400CF4F3A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -110,6 +118,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9DF74B61BA46F0000E8B273 /* MFSJSONEntity.framework in Frameworks */,
 				A9EE4ECB1B7E2C9400CF4F3A /* MFSCache.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -323,6 +332,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				A9DF74B51BA46EFA00E8B273 /* PBXTargetDependency */,
 				A9EE4ECD1B7E2C9400CF4F3A /* PBXTargetDependency */,
 			);
 			name = MFSCacheTests;
@@ -453,6 +463,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		A9DF74B51BA46EFA00E8B273 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = MFSJSONEntity;
+			targetProxy = A9DF74B41BA46EFA00E8B273 /* PBXContainerItemProxy */;
+		};
 		A9EE4ECD1B7E2C9400CF4F3A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A9EE4EBE1B7E2C9400CF4F3A /* MFSCache */;
