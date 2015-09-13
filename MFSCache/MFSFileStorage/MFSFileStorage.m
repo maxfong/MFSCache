@@ -37,10 +37,6 @@
 }
 
 #pragma mark - 保存对象
-- (void)setObject:(MFSFileStorageObject *)aObject forKey:(NSString *)aKey {
-    [self setObject:aObject forKey:aKey type:MFSFileStorageArchiver];
-}
-
 - (void)setObject:(MFSFileStorageObject *)aObject forKey:(NSString *)aKey type:(MFSFileStorageType)t {
     if (aKey.length > 0) {
         switch (t) {

@@ -20,8 +20,6 @@ typedef NS_ENUM(NSUInteger, MFSFileStorageType) {
 
 + (instancetype)defaultStorage;
 
-/** MFSFileStorageType默认为MFSFileStorageArchiver */
-- (void)setObject:(MFSFileStorageObject *)aObject forKey:(NSString *)aKey;
 - (void)setObject:(MFSFileStorageObject *)aObject forKey:(NSString *)aKey type:(MFSFileStorageType)t;
 
 - (MFSFileStorageObject *)objectForKey:(NSString *)aKey;

@@ -29,9 +29,8 @@ extern NSString * const MFSCacheManagerRemoveObjectNotification;//移除缓存
 /** 存储的对象的存在时间，duration默认为0，传-1，表示永久存在，不可被清理，只能手动移除或覆盖移除 
  *  @param duration 存储时间，单位:秒 */
 - (void)setObject:(id)aObject forKey:(NSString *)aKey duration:(NSTimeInterval)duration;
-
-/** 存储全局临时对象，不序列化，不占用硬盘空间 */
-- (void)setGlobalObject:(id)aObject forKey:(NSString *)aKey;
+/** 存储全局临时对象，toDisk为NO则不占用硬盘空间 */
+- (void)setObject:(id)aObject forKey:(NSString *)aKey toDisk:(BOOL)toDisk;
 
 /** 根据Key获取对象(数据相同内存值不同) */
 - (id)objectForKey:(NSString *)aKey;

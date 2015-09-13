@@ -54,17 +54,22 @@ NSString * const MFSCacheManagerRemoveObjectNotification = @"MFSCacheManagerRemo
     [[NSNotificationCenter defaultCenter] postNotificationName:MFSCacheManagerSetObjectNotification object:@{MFSCacheManagerObject:aObject, MFSCacheManagerObjectKey:aKey}];
     MFSFileStorageObject *object = [[MFSFileStorageObject alloc] initWithObject:aObject];
     object.timeoutInterval = duration;
-    if (object.storageString) [self.fileStorage setObject:object forKey:aKey];
+    if (object.storageString) [self.fileStorage setObject:object forKey:aKey type:MFSFileStorageArchiver];
 }
 
-- (void)setGlobalObject:(id)aObject forKey:(NSString *)aKey {
+- (void)setObject:(id)aObject forKey:(NSString *)aKey toDisk:(BOOL)toDisk {
     if (!aKey) return;
     if (!aObject) {
         [self removeObjectForKey:aKey]; return;
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:MFSCacheManagerSetObjectNotification object:@{MFSCacheManagerObject:aObject, MFSCacheManagerObjectKey:aKey}];
-    MFSFileStorageObject *object = [[MFSFileStorageObject alloc] initWithObject:aObject];
-    if (object.storageString) [[MFSFileStorage defaultStorage] setObject:object forKey:aKey type:MFSFileStorageCache];
+    if (toDisk) {
+        [self setObject:aObject forKey:aKey duration:0];
+    }
+    else {
+        [[NSNotificationCenter defaultCenter] postNotificationName:MFSCacheManagerSetObjectNotification object:@{MFSCacheManagerObject:aObject, MFSCacheManagerObjectKey:aKey}];
+        MFSFileStorageObject *object = [[MFSFileStorageObject alloc] initWithObject:aObject];
+        if (object.storageString) [[MFSFileStorage defaultStorage] setObject:object forKey:aKey type:MFSFileStorageCache];
+    }
 }
 
 #pragma mark -
