@@ -65,4 +65,4 @@ Tip:已经过尾递归和JSON对象化对比，优化了70%耗损，现在耗时
 如果您发现任何问题或有啥建议，发个issues，谢谢；
 
 ##License
-MFSJSONEntity is available under the MIT license. See the LICENSE file for more info.
+MFSCache is available under the MIT license. See the LICENSE file for more info.
