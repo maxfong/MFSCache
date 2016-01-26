@@ -19,7 +19,10 @@ extern NSString * const MFSCacheManagerRemoveObjectNotification;//移除缓存
 /** 默认缓存管理器 */
 + (MFSCacheManager *)defaultManager;
 
-/** nil suite means use the default search list that +defaultManager uses */
+/**
+ *  nil suite means use the default search list that +defaultManager uses
+ *  magic: suitename name end with ".document" then save data to Document
+ */
 - (instancetype)initWithSuiteName:(NSString *)suitename;
 
 /** 根据Key缓存对象，默认duration为0：对象一直存在，清理后失效，object为nil则removeObject

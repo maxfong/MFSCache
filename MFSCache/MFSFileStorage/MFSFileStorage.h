@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "MFSFileStorageObject.h"
 
+extern NSString * MFSFileStorageDefaultFinderName;
+
 typedef NS_ENUM(NSUInteger, MFSFileStorageType) {
     MFSFileStorageCache         = 0,    //Memory
     MFSFileStorageArchiver
@@ -16,7 +18,8 @@ typedef NS_ENUM(NSUInteger, MFSFileStorageType) {
 
 @interface MFSFileStorage : NSObject
 
-@property (nonatomic, strong) NSString *suiteName;  //空间
+/** 空间，suiteName以.document结尾则数据保存至Document */
+@property (nonatomic, strong) NSString *suiteName;
 
 + (instancetype)defaultStorage;
 

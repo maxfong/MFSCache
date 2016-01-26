@@ -4,7 +4,7 @@
 //
 //  Created by maxfong on 15/8/14.
 //  Copyright (c) 2015年 MFS. All rights reserved.
-//  https://github.com/maxfong/MFSCache
+//  Version 1.1.0 , updated_at 2016-01-26. https://github.com/maxfong/MFSCache
 
 /**MFSCache是一套简单缓存数据的机制
  MFSCacheManager使用方式、性能效率都非常不错

@@ -9,7 +9,8 @@
 #import "MFSFileStorage.h"
 #import "NSString+MFSEncrypt.h"
 
-#define kFileStorageDefaultFinderName @"storagefile"
+NSString *MFSFileStorageDocumentSuffix = @".document";
+const NSString *MFSFileStorageDefaultFinderName = @"storagefile";
 
 @interface MFSFileStorage ()
 
@@ -44,9 +45,9 @@
                 [self.storageCaches setObject:aObject forKey:aKey];
             } break;
             case MFSFileStorageArchiver: {
-                [self.storageArchivers setObject:aObject forKey:aKey];
                 aObject.objectIdentifier = aKey;
                 [self archiveObject:aObject];
+                [self.storageArchivers setObject:aObject forKey:aKey];
             } break;
             default: break;
         }
@@ -179,7 +180,9 @@
 }
 - (MFSFileStorageObject *)unarchiveObjectWithPath:(NSString *)path {
     if ([path hasSuffix:@".DS_Store"]) return nil;
-    MFSFileStorageObject *object = [NSKeyedUnarchiver unarchiveObjectWithFile:path];
+    MFSFileStorageObject *object = nil;
+    @try { object = [NSKeyedUnarchiver unarchiveObjectWithFile:path]; }
+    @catch (NSException *exception) { }
     switch (object.storageInterval) {
         case MFSFileStorageObjectIntervalTiming: {
             //验证对象生命情况
@@ -238,13 +241,14 @@
 }
 /** 根据目录名称获取缓存路径 */
 - (NSString *)cachePathWithFinderName:(NSString *)finderName {
-    NSString *cachesDirectory = [MFSFileStorage cachesDirectory];
-    NSString *fileDirectory = [NSString stringWithFormat:@"%@%@/", cachesDirectory, [kFileStorageDefaultFinderName md5]];
-    if (finderName.length > 0) {
+    BOOL isDocument = [self.suiteName hasSuffix:MFSFileStorageDocumentSuffix];
+    NSString *directory = isDocument ? [MFSFileStorage documentDirectory] : [MFSFileStorage cachesDirectory];
+    NSString *fileDirectory = [NSString stringWithFormat:@"%@%@/", directory, [MFSFileStorageDefaultFinderName md5]];
+    if (finderName.length) {
         fileDirectory = [NSString stringWithFormat:@"%@%@/", fileDirectory, finderName];
     }
     //空间目录
-    if (self.suiteName.length > 0) {
+        if (self.suiteName.length) {
         fileDirectory = [NSString stringWithFormat:@"%@%@/", fileDirectory, [[self.suiteName md5] md5]];
     }
     if(fileDirectory && [[NSFileManager defaultManager] fileExistsAtPath:fileDirectory] == NO) {
@@ -252,13 +256,20 @@
     }
     return fileDirectory;
 }
-/** 获取缓存主路径 */
+/** 获取缓存路径 */
 + (NSString *)cachesDirectory {
-    static NSString *cacheDirectory;
+    static NSString *instance;
     static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{ cacheDirectory = [MFSFileStorage pathWithSearchDirectory:NSCachesDirectory]; });
-    return cacheDirectory;
+    dispatch_once(&onceToken, ^{ instance = [MFSFileStorage pathWithSearchDirectory:NSCachesDirectory]; });
+    return instance;
 }
++ (NSString *)documentDirectory {
+    static NSString *instance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{ instance = [MFSFileStorage pathWithSearchDirectory:NSDocumentDirectory]; });
+    return instance;
+}
+
 + (NSString *)pathWithSearchDirectory:(NSSearchPathDirectory)searchDirectory {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(searchDirectory, NSUserDomainMask, YES);
     NSString *directory = [paths firstObject];
