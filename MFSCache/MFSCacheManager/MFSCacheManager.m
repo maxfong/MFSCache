@@ -68,7 +68,7 @@ NSString * const MFSCacheManagerRemoveObjectNotification = @"MFSCacheManagerRemo
     else {
         [[NSNotificationCenter defaultCenter] postNotificationName:MFSCacheManagerSetObjectNotification object:@{MFSCacheManagerObject:aObject, MFSCacheManagerObjectKey:aKey}];
         MFSFileStorageObject *object = [[MFSFileStorageObject alloc] initWithObject:aObject];
-        if (object.storageString) [[MFSFileStorage defaultStorage] setObject:object forKey:aKey type:MFSFileStorageCache];
+        if (object.storageString) [self.fileStorage setObject:object forKey:aKey type:MFSFileStorageCache];
     }
 }
 
