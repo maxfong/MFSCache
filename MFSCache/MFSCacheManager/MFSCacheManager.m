@@ -7,10 +7,9 @@
 //  https://github.com/maxfong/MFSCache
 
 #import "MFSCacheManager.h"
-#import "MFSFileStorage.h"
+#import "MFSCacheStorage.h"
 
 NSString * const MFSCacheManagerObject = @"MFSCacheManagerObject";
-NSString * const MFSCacheManagerObjectKey = @"MFSCacheManagerObjectKey";
 NSString * const MFSCacheManagerSetObjectNotification = @"MFSCacheManagerSetObjectNotification";
 NSString * const MFSCacheManagerGetObjectNotification = @"MFSCacheManagerGetObjectNotification";
 NSString * const MFSCacheManagerRemoveObjectNotification = @"MFSCacheManagerRemoveObjectNotification";
@@ -18,7 +17,8 @@ NSString * const MFSCacheManagerRemoveObjectNotification = @"MFSCacheManagerRemo
 @interface MFSCacheManager ()
 
 @property (nonatomic, strong) NSString *suiteName;
-@property (nonatomic, strong) MFSFileStorage *fileStorage;
+@property (nonatomic, strong) MFSCacheStorage *fileStorage;
+@property (nonatomic, strong) NSMutableDictionary *tmpDatas;
 
 @end
 
@@ -38,8 +38,12 @@ NSString * const MFSCacheManagerRemoveObjectNotification = @"MFSCacheManagerRemo
     return self;
 }
 
-- (MFSFileStorage *)fileStorage {
-    return _fileStorage ?: ({ MFSFileStorage *fileStorage = MFSFileStorage.new; fileStorage.suiteName = self.suiteName; _fileStorage = fileStorage; });
+- (MFSCacheStorage *)fileStorage {
+    return _fileStorage ?: ({ MFSCacheStorage *fileStorage = MFSCacheStorage.new; fileStorage.suiteName = self.suiteName; _fileStorage = fileStorage; });
+}
+
+- (NSMutableDictionary *)tmpDatas {
+    return _tmpDatas ?: ({ _tmpDatas = [NSMutableDictionary dictionary]; });
 }
 
 #pragma mark -
@@ -51,10 +55,10 @@ NSString * const MFSCacheManagerRemoveObjectNotification = @"MFSCacheManagerRemo
     if (!aObject) {
         [self removeObjectForKey:aKey]; return;
     }
-    [[NSNotificationCenter defaultCenter] postNotificationName:MFSCacheManagerSetObjectNotification object:@{MFSCacheManagerObject:aObject, MFSCacheManagerObjectKey:aKey}];
-    MFSFileStorageObject *object = [[MFSFileStorageObject alloc] initWithObject:aObject];
+    [[NSNotificationCenter defaultCenter] postNotificationName:MFSCacheManagerSetObjectNotification object:@{MFSCacheManagerObject:@{aKey : aObject}}];
+    MFSCacheStorageObject *object = [[MFSCacheStorageObject alloc] initWithObject:aObject];
     object.timeoutInterval = duration;
-    if (object.storageString) [self.fileStorage setObject:object forKey:aKey type:MFSFileStorageArchiver];
+    if (object.storageString) [self.fileStorage setObject:object forKey:aKey];
 }
 
 - (void)setObject:(id)aObject forKey:(NSString *)aKey toDisk:(BOOL)toDisk {
@@ -63,23 +67,24 @@ NSString * const MFSCacheManagerRemoveObjectNotification = @"MFSCacheManagerRemo
         [self removeObjectForKey:aKey]; return;
     }
     if (toDisk) {
-        [self setObject:aObject forKey:aKey duration:0];
+        [self setObject:aObject forKey:aKey];
     }
     else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:MFSCacheManagerSetObjectNotification object:@{MFSCacheManagerObject:aObject, MFSCacheManagerObjectKey:aKey}];
-        MFSFileStorageObject *object = [[MFSFileStorageObject alloc] initWithObject:aObject];
-        if (object.storageString) [self.fileStorage setObject:object forKey:aKey type:MFSFileStorageCache];
+        [[NSNotificationCenter defaultCenter] postNotificationName:MFSCacheManagerSetObjectNotification object:@{MFSCacheManagerObject:@{aKey : aObject}}];
+        [self.tmpDatas setObject:aObject forKey:aKey];
     }
 }
 
 #pragma mark -
 - (id)objectForKey:(NSString *)aKey {
     if (!aKey) return nil;
-    MFSFileStorageObject *object = [self.fileStorage objectForKey:aKey];
-    id returnObject = [object storageObject];
-    if (!returnObject) return nil;
-    [[NSNotificationCenter defaultCenter] postNotificationName:MFSCacheManagerGetObjectNotification object:@{MFSCacheManagerObject:returnObject, MFSCacheManagerObjectKey:aKey}];
-    return returnObject;
+    return self.tmpDatas[aKey] ?: ({
+        MFSCacheStorageObject *object = [self.fileStorage objectForKey:aKey];
+        id returnObject = [object storageObject];
+        if (!returnObject) return nil;
+        [[NSNotificationCenter defaultCenter] postNotificationName:MFSCacheManagerGetObjectNotification object:@{MFSCacheManagerObject:@{aKey : returnObject}}];
+        returnObject;
+    });
 }
 /** 异步根据Key获取缓存对象 */
 - (void)objectKey:(NSString *)aKey completion:(void (^)(id obj))block {
@@ -93,8 +98,9 @@ NSString * const MFSCacheManagerRemoveObjectNotification = @"MFSCacheManagerRemo
 #pragma mark -
 - (void)removeObjectForKey:(NSString *)aKey {
     if (!aKey) return;
-    [[NSNotificationCenter defaultCenter] postNotificationName:MFSCacheManagerRemoveObjectNotification object:@{MFSCacheManagerObjectKey:aKey}];
+    [[NSNotificationCenter defaultCenter] postNotificationName:MFSCacheManagerRemoveObjectNotification object:aKey];
     [self.fileStorage removeObjectForKey:aKey];
+    [self.tmpDatas removeObjectForKey:aKey];
 }
 
 - (void)removeObjectsWithCompletionBlock:(void (^)(long long folderSize))completionBlock {
@@ -105,10 +111,10 @@ NSString * const MFSCacheManagerRemoveObjectNotification = @"MFSCacheManagerRemo
 }
 
 + (void)removeObjectsWithCompletionBlock:(void (^)(long long folderSize))completionBlock {
-    [MFSFileStorage removeDefaultObjectsWithCompletionBlock:completionBlock];
+    [MFSCacheStorage removeDefaultObjectsWithCompletionBlock:completionBlock];
 }
 + (void)removeExpireObjects {
-    [MFSFileStorage removeExpireObjects];
+    [MFSCacheStorage removeExpireObjects];
 }
 
 @end

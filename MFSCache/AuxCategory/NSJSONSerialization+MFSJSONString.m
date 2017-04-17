@@ -10,16 +10,16 @@
 
 @implementation NSJSONSerialization (MFSJSONString)
 
-+ (NSString *)stringWithJSONObject:(id)obj options:(NSJSONWritingOptions)opt error:(NSError **)error {
++ (NSString *)mfscache_stringWithJSONObject:(id)obj options:(NSJSONWritingOptions)opt error:(NSError **)error {
     NSData *JSONData = [self dataWithJSONObject:obj options:opt error:error];
     NSString *JSONString = [[NSString alloc] initWithData:JSONData encoding:NSUTF8StringEncoding];
     return JSONString;
 }
 
-//NSJSONReadingAllowFragments
-+ (id)objectWithJSONString:(NSString *)string options:(NSJSONReadingOptions)opt error:(NSError **)error {
++ (id)mfscache_objectWithJSONString:(NSString *)string options:(NSJSONReadingOptions)opt error:(NSError **)error {
+    if (!string.length) return nil;
     NSData *JSONData = [string dataUsingEncoding:NSUTF8StringEncoding];
-    return [NSJSONSerialization JSONObjectWithData:JSONData options:opt error:nil];
+    return [NSJSONSerialization JSONObjectWithData:JSONData options:opt error:error];
 }
 
 @end

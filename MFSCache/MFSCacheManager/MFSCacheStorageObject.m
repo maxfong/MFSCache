@@ -1,38 +1,38 @@
 //
-//  MFSFileStorageObject.m
-//  MFSNetworkEngine
+//  MFSCacheStorageObject.m
+//  MFSCache
 //
 //  Created by maxfong on 15/7/6.
 //  Copyright (c) 2015年 maxfong. All rights reserved.
 //  https://github.com/maxfong/MFSCache
 
-#import "MFSFileStorageObject.h"
+#import "MFSCacheStorageObject.h"
 #import "NSJSONSerialization+MFSJSONString.h"
 #import "MFSJSONEntity.h"
 #import "NSString+MFSEncrypt.h"
 
-@interface MFSFileStorageObject ()
+@interface MFSCacheStorageObject ()
 
 @property (nonatomic, copy, readwrite) NSString *storageString;
 @property (nonatomic, strong) NSMutableDictionary *storageOptions;
 
 @end
 
-@implementation MFSFileStorageObject
+@implementation MFSCacheStorageObject
 
 - (instancetype)initWithObject:(id)object {
     if (self = [self init]) {
         NSDictionary *dictionary = [self dictionaryWithObject:object];
-        NSString *objectString = [NSJSONSerialization stringWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil];
-        self.storageString = [objectString aesEncryptAndBase64Encode];
+        NSString *objectString = [NSJSONSerialization mfscache_stringWithJSONObject:dictionary options:NSJSONWritingPrettyPrinted error:nil];
+        self.storageString = [objectString mfscache_AESEncryptAndBase64Encode];
     }
     return self;
 }
 
 - (id)storageObject {
     //AES解密
-    NSString *objectString = [self.storageString aesDecryptAndBase64Decode];
-    NSDictionary *dictionary = [NSJSONSerialization objectWithJSONString:objectString options:NSJSONReadingAllowFragments error:nil];
+    NSString *objectString = [self.storageString mfscache_AESDecryptAndBase64Decode];
+    NSDictionary *dictionary = [NSJSONSerialization mfscache_objectWithJSONString:objectString options:NSJSONReadingAllowFragments error:nil];
     return [self storageObjectWithDictionary:dictionary];
 }
 
@@ -73,7 +73,7 @@
             returnObject = [NSNull null];
         }
         else if ([cls isSubclassOfClass:[NSObject class]]) {
-            NSDictionary *dictionary = [NSJSONSerialization objectWithJSONString:obj options:NSJSONReadingAllowFragments error:nil];
+            NSDictionary *dictionary = [NSJSONSerialization mfscache_objectWithJSONString:obj options:NSJSONReadingAllowFragments error:nil];
             returnObject = [cls objectWithDictionary:dictionary];
         }
         else {
@@ -117,11 +117,11 @@
         [dictionary setValue:objectArray forKey:objectKey];
     }
     else if ([object isKindOfClass:[NSNull class]]) {
-        [dictionary setValue:[NSNull null] forKey:objectKey];
+        [dictionary setValue:@"" forKey:objectKey];
     }
     else if ([object isKindOfClass:[NSObject class]]) {
         NSDictionary *dict = [object propertyDictionary];
-        NSString *objectString = [NSJSONSerialization stringWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
+        NSString *objectString = [NSJSONSerialization mfscache_stringWithJSONObject:dict options:NSJSONWritingPrettyPrinted error:nil];
         [dictionary setValue:objectString forKey:objectKey];
     }
     else {
@@ -136,18 +136,18 @@
 }
 
 - (NSString *)objectIdentifier {
-    return _objectIdentifier ?: ({ _objectIdentifier = [self.storageString md5]; });
+    return _objectIdentifier ?: ({ _objectIdentifier = [self.storageString mfscache_md5]; });
 }
 
-- (MFSFileStorageObjectTimeOutInterval)storageInterval {
+- (MFSCacheStorageObjectTimeOutInterval)storageInterval {
     if (self.timeoutInterval > 0) {
-        return MFSFileStorageObjectIntervalTiming;
+        return MFSCacheStorageObjectIntervalTiming;
     }
     else if (self.timeoutInterval < 0) {
-        return MFSFileStorageObjectIntervalAllTime;
+        return MFSCacheStorageObjectIntervalAllTime;
     }
     else {
-        return MFSFileStorageObjectIntervalDefault;
+        return MFSCacheStorageObjectIntervalDefault;
     }
 }
 

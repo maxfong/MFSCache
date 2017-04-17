@@ -5,19 +5,33 @@ MFSCache是一套简单缓存数据的机制，使用方式、性能效率都非
 
 
 # 安装
-编译静态Framework
+编译静态Framework  
 ```
 git clone https://github.com/maxfong/MFSCache.git
 ```
 选择 lipoFramework Target 编译即可
 
-引用framework
+#### 引用framework
 
 ```
 #import <MFSCache/MFSCache.h>
 ```
 
 **使用framework需Other Linker Flags添加-ObjC**；
+
+### CocoaPods
+
+```
+编辑Pofile
+pod 'MFSCache', '2.0.0'
+```
+
+```
+安装
+pod install
+```
+
+更多关于[CocoaPods](https://cocoapods.org/).
 
 # 说明
 ### 使用方式

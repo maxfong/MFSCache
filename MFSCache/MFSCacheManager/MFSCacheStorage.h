@@ -1,5 +1,5 @@
 //
-//  MFSFileStorage.h
+//  MFSCacheStorage.h
 //  MFSCache
 //
 //  Created by maxfong on 15/7/6.
@@ -7,25 +7,27 @@
 //  https://github.com/maxfong/MFSCache
 
 #import <Foundation/Foundation.h>
-#import "MFSFileStorageObject.h"
+#import "MFSCacheStorageObject.h"
 
-extern NSString * MFSFileStorageDefaultFinderName;
+extern NSString * MFSCacheStorageDefaultFinderName;
 
-typedef NS_ENUM(NSUInteger, MFSFileStorageType) {
-    MFSFileStorageCache         = 0,    //Memory
-    MFSFileStorageArchiver
+typedef NS_ENUM(NSUInteger, MFSCacheStorageType) {
+    MFSCacheStorageCache         = 0,    //Memory
+    MFSCacheStorageArchiver
 };
 
-@interface MFSFileStorage : NSObject
+@interface MFSCacheStorage : NSObject
 
 /** 空间，suiteName以.document结尾则数据保存至Document */
 @property (nonatomic, strong) NSString *suiteName;
 
 + (instancetype)defaultStorage;
 
-- (void)setObject:(MFSFileStorageObject *)aObject forKey:(NSString *)aKey type:(MFSFileStorageType)t;
+/** MFSCacheStorageType默认为MFSCacheStorageArchiver */
+- (void)setObject:(MFSCacheStorageObject *)aObject forKey:(NSString *)aKey;
+- (void)setObject:(MFSCacheStorageObject *)aObject forKey:(NSString *)aKey type:(MFSCacheStorageType)t;
 
-- (MFSFileStorageObject *)objectForKey:(NSString *)aKey;
+- (MFSCacheStorageObject *)objectForKey:(NSString *)aKey;
 
 - (void)removeObjectForKey:(NSString *)aKey;
 

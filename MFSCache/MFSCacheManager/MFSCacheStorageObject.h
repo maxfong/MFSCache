@@ -1,5 +1,5 @@
 //
-//  MFSFileStorageObject.h
+//  MFSCacheStorageObject.h
 //  MFSCache
 //
 //  Created by maxfong on 15/7/6.
@@ -8,20 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSUInteger, MFSFileStorageObjectTimeOutInterval) {
-    MFSFileStorageObjectIntervalDefault,
-    MFSFileStorageObjectIntervalTiming,     //定时
-    MFSFileStorageObjectIntervalAllTime     //永久
+typedef NS_ENUM(NSUInteger, MFSCacheStorageObjectTimeOutInterval) {
+    MFSCacheStorageObjectIntervalDefault,
+    MFSCacheStorageObjectIntervalTiming,     //定时
+    MFSCacheStorageObjectIntervalAllTime     //永久
 };
 
-@interface MFSFileStorageObject : NSObject <NSCoding>
+@interface MFSCacheStorageObject : NSObject <NSCoding>
 
 /** 数据String */
 @property (nonatomic, copy, readonly) NSString *storageString;
-/** 数据对象 */
+/** 数据类名 */
 @property (nonatomic, strong, readonly) id storageObject;
 /** 数据的存储时效性 */
-@property (nonatomic, assign, readonly) MFSFileStorageObjectTimeOutInterval storageInterval;
+@property (nonatomic, assign, readonly) MFSCacheStorageObjectTimeOutInterval storageInterval;
 
 /** 当前对象的标识符（KEY），默认会自动生成，可自定义*/
 @property (nonatomic, copy) NSString *objectIdentifier;

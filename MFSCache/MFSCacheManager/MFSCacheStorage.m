@@ -1,18 +1,17 @@
 //
-//  MFSFileStorage.m
+//  MFSCacheStorage.m
 //  MFSCache
 //
 //  Created by maxfong on 15/7/6.
 //  Copyright (c) 2015年 maxfong. All rights reserved.
 //  https://github.com/maxfong/MFSCache
 
-#import "MFSFileStorage.h"
+#import "MFSCacheStorage.h"
 #import "NSString+MFSEncrypt.h"
 
-NSString *MFSFileStorageDocumentSuffix = @".document";
-const NSString *MFSFileStorageDefaultFinderName = @"storagefile";
+const NSString * MFSCacheStorageDefaultFinderName = @"storagefile";
 
-@interface MFSFileStorage ()
+@interface MFSCacheStorage ()
 
 @property (nonatomic, strong) NSMutableDictionary *storageCaches;
 @property (nonatomic, strong) NSCache *storageArchivers;
@@ -20,7 +19,7 @@ const NSString *MFSFileStorageDefaultFinderName = @"storagefile";
 
 @end
 
-@implementation MFSFileStorage
+@implementation MFSCacheStorage
 
 + (instancetype)defaultStorage {
     static id instance;
@@ -38,13 +37,17 @@ const NSString *MFSFileStorageDefaultFinderName = @"storagefile";
 }
 
 #pragma mark - 保存对象
-- (void)setObject:(MFSFileStorageObject *)aObject forKey:(NSString *)aKey type:(MFSFileStorageType)t {
+- (void)setObject:(MFSCacheStorageObject *)aObject forKey:(NSString *)aKey {
+    [self setObject:aObject forKey:aKey type:MFSCacheStorageArchiver];
+}
+
+- (void)setObject:(MFSCacheStorageObject *)aObject forKey:(NSString *)aKey type:(MFSCacheStorageType)t {
     if (aKey.length > 0) {
         switch (t) {
-            case MFSFileStorageCache: {
+            case MFSCacheStorageCache: {
                 [self.storageCaches setObject:aObject forKey:aKey];
             } break;
-            case MFSFileStorageArchiver: {
+            case MFSCacheStorageArchiver: {
                 aObject.objectIdentifier = aKey;
                 [self archiveObject:aObject];
                 [self.storageArchivers setObject:aObject forKey:aKey];
@@ -60,8 +63,8 @@ const NSString *MFSFileStorageDefaultFinderName = @"storagefile";
 }
 
 #pragma mark - 获取对象
-- (MFSFileStorageObject *)objectForKey:(NSString *)aKey {
-    MFSFileStorageObject *object = [self.storageCaches objectForKey:aKey];
+- (MFSCacheStorageObject *)objectForKey:(NSString *)aKey {
+    MFSCacheStorageObject *object = [self.storageCaches objectForKey:aKey];
     if (!object) object = [self.storageArchivers objectForKey:aKey];
     if (!object) {
         NSString *filePath = [self filePathWithKey:aKey];
@@ -93,8 +96,8 @@ const NSString *MFSFileStorageDefaultFinderName = @"storagefile";
 //删除所有的永久文件
 - (void)removePermanentObjects {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *permanentPath = [self cachePathWithFinderName:self.finderNames[MFSFileStorageObjectIntervalAllTime]];
-        [MFSFileStorage enumerateFilesWithPath:permanentPath usingBlock:^(NSString *fileName) {
+        NSString *permanentPath = [self cachePathWithFinderName:self.finderNames[MFSCacheStorageObjectIntervalAllTime]];
+        [MFSCacheStorage enumerateFilesWithPath:permanentPath usingBlock:^(NSString *fileName) {
             NSString *filePath = [permanentPath stringByAppendingString:fileName];
             BOOL isDir;
             if ([[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDir] && !isDir) {
@@ -106,9 +109,9 @@ const NSString *MFSFileStorageDefaultFinderName = @"storagefile";
 //删除所有的默认文件，常用方法
 - (void)removeDefaultObjectsWithCompletionBlock:(void (^)(long long folderSize))completionBlock {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *path = [self cachePathWithFinderName:self.finderNames[MFSFileStorageObjectIntervalDefault]];
+        NSString *path = [self cachePathWithFinderName:self.finderNames[MFSCacheStorageObjectIntervalDefault]];
         __block long long folderSize = 0;
-        [MFSFileStorage enumerateFilesWithPath:path usingBlock:^(NSString *fileName) {
+        [MFSCacheStorage enumerateFilesWithPath:path usingBlock:^(NSString *fileName) {
             NSString *filePath = [path stringByAppendingPathComponent:fileName];
             BOOL isDir;
             if ([[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDir] && !isDir) {
@@ -123,8 +126,8 @@ const NSString *MFSFileStorageDefaultFinderName = @"storagefile";
 //删除过期的文件
 - (void)removeExpireObjects {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        NSString *path = [self cachePathWithFinderName:self.finderNames[MFSFileStorageObjectIntervalTiming]];
-        [MFSFileStorage enumerateFilesWithPath:path usingBlock:^(NSString *fileName) {
+        NSString *path = [self cachePathWithFinderName:self.finderNames[MFSCacheStorageObjectIntervalTiming]];
+        [MFSCacheStorage enumerateFilesWithPath:path usingBlock:^(NSString *fileName) {
             NSString *filePath = [path stringByAppendingPathComponent:fileName];
             BOOL isDir;
             if ([[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDir] && !isDir) {
@@ -136,10 +139,10 @@ const NSString *MFSFileStorageDefaultFinderName = @"storagefile";
 
 + (void)removeDefaultObjectsWithCompletionBlock:(void (^)(long long folderSize))completionBlock {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        MFSFileStorage *storage = [MFSFileStorage defaultStorage];
-        NSString *path = [storage cachePathWithFinderName:storage.finderNames[MFSFileStorageObjectIntervalDefault]];
+        MFSCacheStorage *storage = [MFSCacheStorage defaultStorage];
+        NSString *path = [storage cachePathWithFinderName:storage.finderNames[MFSCacheStorageObjectIntervalDefault]];
         __block long long folderSize = 0;
-        [MFSFileStorage enumerateFilesWithPath:path usingBlock:^(NSString *fileName) {
+        [MFSCacheStorage enumerateFilesWithPath:path usingBlock:^(NSString *fileName) {
             NSString *filePath = [path stringByAppendingPathComponent:fileName];
             long long size = [[[NSFileManager defaultManager] attributesOfItemAtPath:filePath error:nil] fileSize];
             folderSize += size;
@@ -151,26 +154,26 @@ const NSString *MFSFileStorageDefaultFinderName = @"storagefile";
 
 + (void)removeExpireObjects {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        MFSFileStorage *storage = [MFSFileStorage defaultStorage];
-        NSString *path = [storage cachePathWithFinderName:storage.finderNames[MFSFileStorageObjectIntervalTiming]];
+        MFSCacheStorage *storage = [MFSCacheStorage defaultStorage];
+        NSString *path = [storage cachePathWithFinderName:storage.finderNames[MFSCacheStorageObjectIntervalTiming]];
         [self removeExpireObjectsWithPath:path];
     });
 }
 + (void)removeExpireObjectsWithPath:(NSString *)path {
-    [MFSFileStorage enumerateFilesWithPath:path usingBlock:^(NSString *fileName) {
+    [MFSCacheStorage enumerateFilesWithPath:path usingBlock:^(NSString *fileName) {
         NSString *filePath = [path stringByAppendingPathComponent:fileName];
         BOOL isDir;
         if ([[NSFileManager defaultManager] fileExistsAtPath:filePath isDirectory:&isDir] && !isDir) {
-            [[MFSFileStorage defaultStorage] unarchiveObjectWithPath:filePath];
+            [[MFSCacheStorage defaultStorage] unarchiveObjectWithPath:filePath];
         }
         else {
-            [MFSFileStorage removeExpireObjectsWithPath:filePath];
+            [MFSCacheStorage removeExpireObjectsWithPath:filePath];
         }
     }];
 }
 
 #pragma mark - archive/unarchive
-- (void)archiveObject:(MFSFileStorageObject *)object {
+- (void)archiveObject:(MFSCacheStorageObject *)object {
     @synchronized(self) {
         //移除其他级别的文件，一个Key只保存一份
         [self removeObjectForKey:object.objectIdentifier];
@@ -178,13 +181,13 @@ const NSString *MFSFileStorageDefaultFinderName = @"storagefile";
         [NSKeyedArchiver archiveRootObject:object toFile:filePath];
     }
 }
-- (MFSFileStorageObject *)unarchiveObjectWithPath:(NSString *)path {
+- (MFSCacheStorageObject *)unarchiveObjectWithPath:(NSString *)path {
     if ([path hasSuffix:@".DS_Store"]) return nil;
-    MFSFileStorageObject *object = nil;
+    MFSCacheStorageObject *object = nil;
     @try { object = [NSKeyedUnarchiver unarchiveObjectWithFile:path]; }
     @catch (NSException *exception) { }
     switch (object.storageInterval) {
-        case MFSFileStorageObjectIntervalTiming: {
+        case MFSCacheStorageObjectIntervalTiming: {
             //验证对象生命情况
             NSDictionary *arrtibutes = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil];
             if (arrtibutes) {
@@ -199,8 +202,8 @@ const NSString *MFSFileStorageDefaultFinderName = @"storagefile";
                 });
             }
         }   break;
-        case MFSFileStorageObjectIntervalDefault:
-        case MFSFileStorageObjectIntervalAllTime: {
+        case MFSCacheStorageObjectIntervalDefault:
+        case MFSCacheStorageObjectIntervalAllTime: {
             return object;
         }   break;
     }
@@ -210,11 +213,11 @@ const NSString *MFSFileStorageDefaultFinderName = @"storagefile";
 #pragma mark - 文件名操作
 - (NSArray *)finderNames {
     if (!_finderNames) {
-        _finderNames = @[[@"storage0" md5], [@"storage1" md5], [@"storage2" md5]];
+        _finderNames = @[[@"storage0" mfscache_md5], [@"storage1" mfscache_md5], [@"storage2" mfscache_md5]];
     }
     return _finderNames;
 }
-- (NSString *)filePathWithObject:(MFSFileStorageObject *)object {
+- (NSString *)filePathWithObject:(MFSCacheStorageObject *)object {
     NSString *finderName = self.finderNames[object.storageInterval];
     return [self filePathWithFileName:object.objectIdentifier finderName:finderName];
 }
@@ -236,20 +239,20 @@ const NSString *MFSFileStorageDefaultFinderName = @"storagefile";
 - (NSString *)filePathWithFileName:(NSString *)name finderName:(NSString *)finderName {
     if ([name length] <= 0) return nil;
     NSString *finderPath = [self cachePathWithFinderName:finderName];
-    NSString *filePath = [NSString stringWithFormat:@"%@%@", finderPath, [name md5]];
+    NSString *filePath = [NSString stringWithFormat:@"%@%@", finderPath, [name mfscache_md5]];
     return filePath;
 }
 /** 根据目录名称获取缓存路径 */
 - (NSString *)cachePathWithFinderName:(NSString *)finderName {
-    BOOL isDocument = [self.suiteName hasSuffix:MFSFileStorageDocumentSuffix];
-    NSString *directory = isDocument ? [MFSFileStorage documentDirectory] : [MFSFileStorage cachesDirectory];
-    NSString *fileDirectory = [NSString stringWithFormat:@"%@%@/", directory, [MFSFileStorageDefaultFinderName md5]];
+    BOOL isDocument = [self.suiteName hasSuffix:@".document"];
+    NSString *directory = isDocument ? [MFSCacheStorage documentDirectory] : [MFSCacheStorage cachesDirectory];
+    NSString *fileDirectory = [NSString stringWithFormat:@"%@%@/", directory, [MFSCacheStorageDefaultFinderName mfscache_md5]];
     if (finderName.length) {
         fileDirectory = [NSString stringWithFormat:@"%@%@/", fileDirectory, finderName];
     }
     //空间目录
-        if (self.suiteName.length) {
-        fileDirectory = [NSString stringWithFormat:@"%@%@/", fileDirectory, [[self.suiteName md5] md5]];
+    if (self.suiteName.length) {
+        fileDirectory = [NSString stringWithFormat:@"%@%@/", fileDirectory, [[self.suiteName mfscache_md5] mfscache_md5]];
     }
     if(fileDirectory && [[NSFileManager defaultManager] fileExistsAtPath:fileDirectory] == NO) {
         [[NSFileManager defaultManager] createDirectoryAtPath:fileDirectory withIntermediateDirectories:YES attributes:nil error:NULL];
@@ -260,16 +263,15 @@ const NSString *MFSFileStorageDefaultFinderName = @"storagefile";
 + (NSString *)cachesDirectory {
     static NSString *instance;
     static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{ instance = [MFSFileStorage pathWithSearchDirectory:NSCachesDirectory]; });
+    dispatch_once(&onceToken, ^{ instance = [MFSCacheStorage pathWithSearchDirectory:NSCachesDirectory]; });
     return instance;
 }
 + (NSString *)documentDirectory {
     static NSString *instance;
     static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{ instance = [MFSFileStorage pathWithSearchDirectory:NSDocumentDirectory]; });
+    dispatch_once(&onceToken, ^{ instance = [MFSCacheStorage pathWithSearchDirectory:NSDocumentDirectory]; });
     return instance;
 }
-
 + (NSString *)pathWithSearchDirectory:(NSSearchPathDirectory)searchDirectory {
     NSArray *paths = NSSearchPathForDirectoriesInDomains(searchDirectory, NSUserDomainMask, YES);
     NSString *directory = [paths firstObject];
