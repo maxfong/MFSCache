@@ -6,29 +6,15 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXAggregateTarget section */
-		A9EE4F441B7E4C4100CF4F3A /* lipoFramework */ = {
-			isa = PBXAggregateTarget;
-			buildConfigurationList = A9EE4F471B7E4C4100CF4F3A /* Build configuration list for PBXAggregateTarget "lipoFramework" */;
-			buildPhases = (
-				A9EE4F481B7E4C4600CF4F3A /* ShellScript */,
-			);
-			dependencies = (
-			);
-			name = lipoFramework;
-			productName = lipoFramework;
-		};
-/* End PBXAggregateTarget section */
-
 /* Begin PBXBuildFile section */
 		8864FE1F89E0CF5401654465 /* libPods-MFSCache.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 40C55F762F9B14061940D09D /* libPods-MFSCache.a */; };
-		A9EB170D1EA4A30400874A28 /* MFSCacheManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A9EB17051EA4A30400874A28 /* MFSCacheManager.h */; };
+		A9EB170D1EA4A30400874A28 /* MFSCacheManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A9EB17051EA4A30400874A28 /* MFSCacheManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9EB170E1EA4A30400874A28 /* MFSCacheManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EB17061EA4A30400874A28 /* MFSCacheManager.m */; };
 		A9EB170F1EA4A30400874A28 /* MFSCacheStorage.h in Headers */ = {isa = PBXBuildFile; fileRef = A9EB17071EA4A30400874A28 /* MFSCacheStorage.h */; };
 		A9EB17101EA4A30400874A28 /* MFSCacheStorage.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EB17081EA4A30400874A28 /* MFSCacheStorage.m */; };
 		A9EB17111EA4A30400874A28 /* MFSCacheStorageObject.h in Headers */ = {isa = PBXBuildFile; fileRef = A9EB17091EA4A30400874A28 /* MFSCacheStorageObject.h */; };
 		A9EB17121EA4A30400874A28 /* MFSCacheStorageObject.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EB170A1EA4A30400874A28 /* MFSCacheStorageObject.m */; };
-		A9EB17171EA4A3D200874A28 /* MFSCacheUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = A9EB17151EA4A3D200874A28 /* MFSCacheUtility.h */; };
+		A9EB17171EA4A3D200874A28 /* MFSCacheUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = A9EB17151EA4A3D200874A28 /* MFSCacheUtility.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A9EB17181EA4A3D200874A28 /* MFSCacheUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EB17161EA4A3D200874A28 /* MFSCacheUtility.m */; };
 		A9EB171B1EA4A6A400874A28 /* NSData+MFSAES.h in Headers */ = {isa = PBXBuildFile; fileRef = A9EB17191EA4A6A400874A28 /* NSData+MFSAES.h */; };
 		A9EB171C1EA4A6A400874A28 /* NSData+MFSAES.m in Sources */ = {isa = PBXBuildFile; fileRef = A9EB171A1EA4A6A400874A28 /* NSData+MFSAES.m */; };
@@ -285,9 +271,6 @@
 					A9EE4EC91B7E2C9400CF4F3A = {
 						CreatedOnToolsVersion = 6.3;
 					};
-					A9EE4F441B7E4C4100CF4F3A = {
-						CreatedOnToolsVersion = 6.3;
-					};
 				};
 			};
 			buildConfigurationList = A9EE4EB91B7E2C9400CF4F3A /* Build configuration list for PBXProject "MFSCache" */;
@@ -304,7 +287,6 @@
 			targets = (
 				A9EE4EBE1B7E2C9400CF4F3A /* MFSCache */,
 				A9EE4EC91B7E2C9400CF4F3A /* MFSCacheTests */,
-				A9EE4F441B7E4C4100CF4F3A /* lipoFramework */,
 			);
 		};
 /* End PBXProject section */
@@ -341,19 +323,6 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
-		};
-		A9EE4F481B7E4C4600CF4F3A /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Sets the target folders and the final framework product.\n# 如果工程名称和Framework的Target名称不一样的话，要自定义FMKNAME\n# 例如: FMK_NAME = \"MyFramework\"\nFMK_NAME=${PROJECT_NAME}\n# Install dir will be the final output to the framework.\n# The following line create it in the root folder of the current project.\nINSTALL_DIR=${SRCROOT}/Products/${FMK_NAME}.framework\n# Working dir will be deleted after the framework creation.\nWRK_DIR=build\nDEVICE_DIR=${WRK_DIR}/Release-iphoneos/${FMK_NAME}.framework\nSIMULATOR_DIR=${WRK_DIR}/Release-iphonesimulator/${FMK_NAME}.framework\n# -configuration ${CONFIGURATION}\n# Clean and Building both architectures.\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphoneos clean build\nxcodebuild -configuration \"Release\" -target \"${FMK_NAME}\" -sdk iphonesimulator clean build\n# Cleaning the oldest.\nif [ -d \"${INSTALL_DIR}\" ]\nthen\nrm -rf \"${INSTALL_DIR}\"\nfi\nmkdir -p \"${INSTALL_DIR}\"\ncp -R \"${DEVICE_DIR}/\" \"${INSTALL_DIR}/\"\n# Uses the Lipo Tool to merge both binary files (i386 + armv6/armv7) into one Universal final product.\nlipo -create \"${DEVICE_DIR}/${FMK_NAME}\" \"${SIMULATOR_DIR}/${FMK_NAME}\" -output \"${INSTALL_DIR}/${FMK_NAME}\"\nrm -r \"${WRK_DIR}\"\nopen \"${INSTALL_DIR}\"";
 		};
 		EBE2DF1D26862B700488778A /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -506,7 +475,6 @@
 				INFOPLIST_FILE = MFSCache/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
 				PRODUCT_BUNDLE_IDENTIFIER = com.imfong.MFSCache;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -524,7 +492,6 @@
 				INFOPLIST_FILE = MFSCache/Info.plist;
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				MACH_O_TYPE = staticlib;
 				PRODUCT_BUNDLE_IDENTIFIER = com.imfong.MFSCache;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -563,20 +530,6 @@
 			};
 			name = Release;
 		};
-		A9EE4F451B7E4C4100CF4F3A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Debug;
-		};
-		A9EE4F461B7E4C4100CF4F3A /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				PRODUCT_NAME = "$(TARGET_NAME)";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -603,15 +556,6 @@
 			buildConfigurations = (
 				A9EE4ED91B7E2C9400CF4F3A /* Debug */,
 				A9EE4EDA1B7E2C9400CF4F3A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		A9EE4F471B7E4C4100CF4F3A /* Build configuration list for PBXAggregateTarget "lipoFramework" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A9EE4F451B7E4C4100CF4F3A /* Debug */,
-				A9EE4F461B7E4C4100CF4F3A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -4,20 +4,7 @@
 MFSCache是一套简单缓存数据的机制，使用方式、性能效率都非常不错，增加缓存生命周期、缓存空间、支持更多的数据类型、数据加密、全局对象（伪单例）、快速缓存、分级、移除缓存；
 
 
-# 安装
-编译静态Framework  
-```
-git clone https://github.com/maxfong/MFSCache.git
-```
-选择 lipoFramework Target 编译即可
-
-#### 引用framework
-
-```
-#import <MFSCache/MFSCache.h>
-```
-
-**使用framework需Other Linker Flags添加-ObjC**；
+# 安装  
 
 ### CocoaPods
 
@@ -31,7 +18,22 @@ pod 'MFSCache', '2.0.0'
 pod install
 ```
 
-更多关于[CocoaPods](https://cocoapods.org/).
+更多关于[CocoaPods](https://cocoapods.org/)
+
+### Carthage
+```
+编辑Cartfile
+github "maxfong/MFSCache" >= 2.0.0
+```
+
+```
+安装
+carthage update
+```
+
+更多关于[Carthage](https://github.com/Carthage/Carthage)
+
+**使用Framework，工程Other Linker Flags需添加-ObjC**
 
 # 说明
 ### 使用方式

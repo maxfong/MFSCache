@@ -12,3 +12,4 @@
 */
 
 #import "MFSCacheManager.h"
+#import "MFSCacheUtility.h"
