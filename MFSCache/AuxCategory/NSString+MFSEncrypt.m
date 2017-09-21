@@ -26,9 +26,7 @@
 - (NSString *)mfscache_AESEncryptAndBase64Encode {
     NSData *data = [self dataUsingEncoding:NSUTF8StringEncoding];
     NSData *encrypt = [data mfscache_AESEncrypt];
-    NSData *base64Data = [encrypt base64EncodedDataWithOptions:0];
-    NSString *secret = nil;
-    if (encrypt) secret = [NSString stringWithUTF8String:[base64Data bytes]];
+    NSString *secret = [encrypt base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];
     return [secret stringByReplacingOccurrencesOfString:@"\\" withString:@""];
 }
 
