@@ -10,7 +10,7 @@ MFSCache是一套简单缓存数据的机制，使用方式、性能效率都非
 
 ```
 编辑Pofile
-pod 'MFSCache', '2.0.0'
+pod 'MFSCache', '2.0.1'
 ```
 
 ```
@@ -23,7 +23,7 @@ pod install
 ### Carthage
 ```
 编辑Cartfile
-github "maxfong/MFSCache" >= 2.0.0
+github "maxfong/MFSCache" >= 2.0.1
 ```
 
 ```
