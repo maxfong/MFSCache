@@ -42,17 +42,19 @@ const NSString * MFSCacheStorageDefaultFinderName = @"storagefile";
 }
 
 - (void)setObject:(MFSCacheStorageObject *)aObject forKey:(NSString *)aKey type:(MFSCacheStorageType)t {
-    if (aKey.length > 0) {
-        switch (t) {
-            case MFSCacheStorageCache: {
-                [self.storageCaches setObject:aObject forKey:aKey];
-            } break;
-            case MFSCacheStorageArchiver: {
-                aObject.objectIdentifier = aKey;
-                [self archiveObject:aObject];
-                [self.storageArchivers setObject:aObject forKey:aKey];
-            } break;
-            default: break;
+    @synchronized(self) {
+        if (aKey.length > 0) {
+            switch (t) {
+                case MFSCacheStorageCache: {
+                    [self.storageCaches setObject:aObject forKey:aKey];
+                } break;
+                case MFSCacheStorageArchiver: {
+                    aObject.objectIdentifier = aKey;
+                    [self archiveObject:aObject];
+                    [self.storageArchivers setObject:aObject forKey:aKey];
+                } break;
+                default: break;
+            }
         }
     }
 }
@@ -70,7 +72,9 @@ const NSString * MFSCacheStorageDefaultFinderName = @"storagefile";
         NSString *filePath = [self filePathWithKey:aKey];
         if (filePath) {
             object = [self unarchiveObjectWithPath:filePath];
-            if (object) [self.storageArchivers setObject:object forKey:aKey];
+            @synchronized(self) {
+                if (object) [self.storageArchivers setObject:object forKey:aKey];
+            }
         }
     }
     return object;
