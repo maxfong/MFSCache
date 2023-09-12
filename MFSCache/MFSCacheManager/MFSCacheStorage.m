@@ -67,14 +67,17 @@ const NSString * MFSCacheStorageDefaultFinderName = @"storagefile";
 #pragma mark - 获取对象
 - (MFSCacheStorageObject *)objectForKey:(NSString *)aKey {
     MFSCacheStorageObject *object = [self.storageCaches objectForKey:aKey];
-    if (!object) object = [self.storageArchivers objectForKey:aKey];
+    NSString *filePath = [self filePathWithKey:aKey];
     if (!object) {
-        NSString *filePath = [self filePathWithKey:aKey];
-        if (filePath) {
-            object = [self unarchiveObjectWithPath:filePath];
-            @synchronized(self) {
-                if (object) [self.storageArchivers setObject:object forKey:aKey];
-            }
+        object = [self.storageArchivers objectForKey:aKey];
+        if (object.storageInterval == MFSCacheStorageObjectIntervalTiming) {
+            object = [self validObject:object withTimeoutIntervalPath:filePath];
+        }
+    }
+    if (!object && filePath) {
+        object = [self unarchiveObjectWithPath:filePath];
+        @synchronized(self) {
+            if (object) [self.storageArchivers setObject:object forKey:aKey];
         }
     }
     return object;
@@ -192,24 +195,29 @@ const NSString * MFSCacheStorageDefaultFinderName = @"storagefile";
     @catch (NSException *exception) { }
     switch (object.storageInterval) {
         case MFSCacheStorageObjectIntervalTiming: {
-            //验证对象生命情况
-            NSDictionary *arrtibutes = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil];
-            if (arrtibutes) {
-                NSDate *createDate = arrtibutes[NSFileCreationDate];
-                if (createDate) {
-                    NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:createDate];
-                    BOOL valid = interval < object.timeoutInterval;
-                    if (valid) return object;
-                }
-                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-                    [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
-                });
-            }
+            return [self validObject:object withTimeoutIntervalPath:path];
         }   break;
         case MFSCacheStorageObjectIntervalDefault:
         case MFSCacheStorageObjectIntervalAllTime: {
             return object;
         }   break;
+    }
+    return nil;
+}
+
+//验证对象生命情况
+- (TCTCacheStorageObject *)validObject:(TCTCacheStorageObject *)object withTimeoutIntervalPath:(NSString *)path {
+    NSDictionary *arrtibutes = [[NSFileManager defaultManager] attributesOfItemAtPath:path error:nil];
+    if (arrtibutes) {
+        NSDate *createDate = arrtibutes[NSFileCreationDate];
+        if (createDate) {
+            NSTimeInterval interval = [[NSDate date] timeIntervalSinceDate:createDate];
+            BOOL valid = interval < object.timeoutInterval;
+            if (valid) return object;
+        }
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+        });
     }
     return nil;
 }
